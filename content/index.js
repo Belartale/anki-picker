@@ -5,17 +5,14 @@ document.addEventListener("dblclick", (event) => {
 
     console.log(`selectedText >>> `, selectedText);
 
-    chrome.storage.sync.set(
-        { selectedTextFromStorage: selectedText },
-        function () {
-            //  A data saved callback omg so fancy
-        }
-    );
+    chrome.storage.sync.set({ selectedText: selectedText }, function () {
+        //  A data saved callback omg so fancy
+    });
 
     chrome.storage.sync.get(
-        /* String or Array */ ["selectedTextFromStorage"],
+        /* String or Array */ ["selectedText"],
         function (storage) {
-            console.log(`storage >>> `, storage);
+            console.log(`storage.selectedText >>> `, storage["selectedText"]);
         }
     );
 });
