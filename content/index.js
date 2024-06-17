@@ -5,6 +5,7 @@ document.addEventListener("dblclick", (event) => {
 
     console.log(`selectedText >>> `, selectedText);
 
+    //! The quota limitation is approximately 100 KB, 8 KB per item.
     chrome.storage.sync.set({ selectedText: selectedText }, function () {
         //  A data saved callback omg so fancy
     });
