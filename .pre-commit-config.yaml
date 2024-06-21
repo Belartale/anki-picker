@@ -1,0 +1,36 @@
+exclude: \.(less|rst||po|pot)$
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-merge-conflict
+        description: Check for files that contain merge conflict strings.
+        language_version: python3
+
+      - id: trailing-whitespace
+        description: Trims trailing whitespace.
+        args: [--markdown-linebreak-ext=md]
+        language_version: python3
+
+      - id: mixed-line-ending
+        description: Replaces or checks mixed line ending.
+        args: [--fix=lf]
+        exclude: make.bat
+        language_version: python3
+
+      - id: fix-byte-order-marker
+        description: Removes UTF-8 BOM if present, generally a Windows problem.
+        language_version: python3
+
+      - id: end-of-file-fixer
+        description: Makes sure files end in a newline and only a newline.
+        exclude: tests/fake_.*\.key
+        language_version: python3
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: 'v3.0.0-alpha.9-for-vscode'
+    hooks:
+      - id: prettier
+        files: \.(js|css)$
+        args: ['--config', './.prettierrc.toml']
