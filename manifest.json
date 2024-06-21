@@ -15,6 +15,10 @@
             "matches": ["<all_urls>"]
         }
     ],
+    "background": {
+        "service_worker": "serviceWorkers/index.js",
+        "type": "module"
+    },
     "action": {
         "default_popup": "popup/index.html",
         "default_icon": {
