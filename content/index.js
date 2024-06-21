@@ -1,8 +1,26 @@
 console.log(`start content/index.js`);
 
+function showPopover(x, y, word) {
+    const popover = document.createElement("div");
+    popover.id = "popover-anki-picker";
+    popover.innerText = `Selected word: ${word}`;
+    popover.style.position = "absolute";
+    popover.style.left = `${x}px`;
+    popover.style.top = `${y}px`;
+    popover.style.border = `1px solid black`;
+    popover.style.backgroundColor = `white`;
+    document.body.appendChild(popover);
+
+    setTimeout(() => {
+        popover.remove();
+    }, 3_000);
+}
+
 document.addEventListener("dblclick", (event) => {
     const selectedText = window.getSelection().toString();
     console.log(`selectedText >>> `, selectedText);
+
+    showPopover(event.pageX, event.pageY, selectedText);
 
     //! open new window
     // chrome.runtime.sendMessage(
