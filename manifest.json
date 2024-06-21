@@ -15,6 +15,19 @@
             "matches": ["<all_urls>"]
         }
     ],
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "*://*/*",
+                "http://*/*",
+                "https://*/*",
+                "ftp://*/*",
+                "file://*/*",
+                "chrome-extension://*/*"
+            ],
+            "resources": ["/popup/index.html"]
+        }
+    ],
     "background": {
         "service_worker": "serviceWorkers/index.js",
         "type": "module"
