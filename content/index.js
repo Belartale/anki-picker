@@ -3,7 +3,7 @@ console.log(`start content/index.js`);
 function showPopover(x, y, word) {
     const popover = document.createElement("div");
     popover.id = "popover-anki-picker";
-    const url = chrome.runtime.getURL("/popup/index.html");
+    const url = chrome.runtime.getURL("/content/index.html");
     popover.innerHTML = `<iframe src="${url}" title="description"></iframe>`;
     popover.style.position = "absolute";
     popover.style.left = `${x}px`;
