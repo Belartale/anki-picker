@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- <script nonce type="module" src="../tools/invoke.js"></script> -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .form11111 {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                background-color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!--     <script>
+    await invoke("deckNames", 6);
+    </script>
+  -->
+        <form id="form" class="form11111">
+            <select name="deck" id="deck"></select>
+            <input id="inputT" name="front" placeholder="front" type="text" />
+            <input name="back" placeholder="back" type="text" />
+            <input name="model" placeholder="model" type="text" />
+            <button>Submit</button>
+        </form>
+        <script defer type="module" src="./indexForHTML.js"></script>
+    </body>
+</html>
