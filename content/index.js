@@ -1,5 +1,6 @@
 console.log(`start content/index.js`);
-/*export*/ function invoke(action, version, params = {}) {
+
+function invoke(action, version, params = {}) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("error", () => reject("failed to issue request"));
@@ -30,7 +31,6 @@ console.log(`start content/index.js`);
 }
 
 const uniqIdForIframeHTMLElement = `anki-picker-${new Date().getMilliseconds()}`;
-console.log("uniqIdForIframeHTMLElement:", uniqIdForIframeHTMLElement);
 
 function showPopover(x, y, word) {
     const popover = document.createElement("div");
@@ -42,8 +42,8 @@ function showPopover(x, y, word) {
     popover.style.top = `${y}px`;
     popover.style.border = `1px solid black`;
     popover.style.backgroundColor = `white`;
+    popover.style.zIndex = `999`;
     document.body.appendChild(popover);
-    // import { invoke } from "tools/invoke.js";
 
     // setTimeout(() => {
     //     popover.remove();
@@ -55,8 +55,8 @@ document.addEventListener("dblclick", (event) => {
     const maxAttempts = 3;
 
     const start = async () => {
-        const result = await invoke("modelNames", 6);
-        console.log("result >>>", result);
+        // const result = await invoke("modelNames", 6);
+        // console.log("result >>>", result);
 
         const recursion = () => {
             setTimeout(() => {
@@ -69,32 +69,35 @@ document.addEventListener("dblclick", (event) => {
         if (!iframe && attempts < maxAttempts) {
             recursion();
         } else if (iframe && attempts < maxAttempts) {
-            const iframeDocument =
-                iframe.contentWindow.document.querySelector(`#form`);
-
-            if (!iframeDocument) {
-                // todo is need to check?
-                recursion();
-            } else {
-                const formHTMLElement =
-                    iframeDocument.document.querySelector(`#form`);
-
-                if (!formHTMLElement) {
-                    recursion();
-                } else {
-                    console.log(`formHTMLElement >>> `, formHTMLElement);
-                }
-            }
+            // // Отправка сообщения в iframe
+            // function sendMessageToIframe() {
+            //     var iframe = document.getElementById(
+            //         uniqIdForIframeHTMLElement
+            //     );
+            //     var message = { type: "getInputValue" };
+            //     iframe.contentWindow.postMessage(message, "*");
+            // }
+            // // Прослушивание ответа от iframe
+            // window.addEventListener("message", function (event) {
+            //     // Проверка источника сообщения для безопасности
+            //     // if (event.origin !== "https://iframe-domain.com") return;
+            //     if (event.data.type === "inputValue") {
+            //         console.log("Значение input из iframe:", event.data.value);
+            //     }
+            // });
+            // // Вызов функции для отправки сообщения
+            // sendMessageToIframe();
         } else {
             throw new Error("ERROR, something went wrong!!!");
         }
     };
-    start();
 
     const selectedText = window.getSelection().toString();
     console.log(`selectedText >>> `, selectedText);
 
     showPopover(event.pageX, event.pageY, selectedText);
+
+    start();
 
     //! open new window
     // chrome.runtime.sendMessage(
