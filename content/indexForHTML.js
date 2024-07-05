@@ -111,15 +111,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     modelHTMLElement.addEventListener("change", async (event) => {
         const inputtedModelName = event.target.value;
 
-        // chrome.storage.sync.set({ model: inputtedModelName }, () => { });
         StorageHepper.set({
             key: "model",
             value: inputtedModelName,
         });
+    });
 
-        // const gotFindModelsByName = await invoke("findModelsByName", 6, {
-        //     modelNames: [gotModelName],
-        // });
+    StorageHepper.get({
+        key: "selectedText",
+        callback: (selectedTextFromStorage) => {
+            frontHTMLElement.value = selectedTextFromStorage; // todo
+        },
     });
 
     submitHTMLElement.addEventListener("click", async () => {
@@ -163,14 +165,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-// // Прослушивание сообщений от родительского окна
+// Прослушивание сообщений от родительского окна
 // window.addEventListener("message", async (event) => {
-//     console.log(`111111111111111`);
+//     console.log('window.addEventListener => event:', event)
 
 //     // Проверка источника сообщения для безопасности
 //     // if (event.origin !== "https://parent-domain.com") return;
 
-//     if (event.data.type === "getInputValue") {
+//     if (event.data.type === "selectedText") {
 //         var input = document.getElementById("inputT");
 //         var message = {
 //             type: "inputValue",

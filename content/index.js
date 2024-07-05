@@ -30,6 +30,32 @@ function invoke(action, version, params = {}) {
     });
 }
 
+class StorageHepper {
+    static set({ key, value, callback }) {
+        if (!key || !value) {
+            throw new Error("Key or value not found");
+        }
+
+        chrome.storage.sync.set({ [key]: value }, callback);
+    }
+
+    static get({ key, callback }) {
+        if (!key) {
+            throw new Error("Key not found");
+        } else if (!callback) {
+            throw new Error("Callback not found");
+        }
+
+        chrome.storage.sync.get([key], function (storage) {
+            if (storage[key]) {
+                callback(storage[key]);
+            } else {
+                throw new Error('Value from "chrome.storage" not found');
+            }
+        });
+    }
+}
+
 const uniqIdForIframeHTMLElement = `anki-picker-${new Date().getMilliseconds()}`;
 
 function showPopover(x, y, word) {
@@ -54,10 +80,7 @@ document.addEventListener("dblclick", (event) => {
     const attempts = 0;
     const maxAttempts = 3;
 
-    const start = async () => {
-        // const result = await invoke("modelNames", 6);
-        // console.log("result >>>", result);
-
+    const start = async (selectedText) => {
         const recursion = () => {
             setTimeout(() => {
                 start();
@@ -69,24 +92,10 @@ document.addEventListener("dblclick", (event) => {
         if (!iframe && attempts < maxAttempts) {
             recursion();
         } else if (iframe && attempts < maxAttempts) {
-            // // Отправка сообщения в iframe
-            // function sendMessageToIframe() {
-            //     var iframe = document.getElementById(
-            //         uniqIdForIframeHTMLElement
-            //     );
-            //     var message = { type: "getInputValue" };
-            //     iframe.contentWindow.postMessage(message, "*");
-            // }
-            // // Прослушивание ответа от iframe
-            // window.addEventListener("message", function (event) {
-            //     // Проверка источника сообщения для безопасности
-            //     // if (event.origin !== "https://iframe-domain.com") return;
-            //     if (event.data.type === "inputValue") {
-            //         console.log("Значение input из iframe:", event.data.value);
-            //     }
-            // });
-            // // Вызов функции для отправки сообщения
-            // sendMessageToIframe();
+            StorageHepper.set({
+                key: "selectedText",
+                value: selectedText,
+            });
         } else {
             throw new Error("ERROR, something went wrong!!!");
         }
@@ -97,7 +106,7 @@ document.addEventListener("dblclick", (event) => {
 
     showPopover(event.pageX, event.pageY, selectedText);
 
-    start();
+    start(selectedText);
 
     //! open new window
     // chrome.runtime.sendMessage(
