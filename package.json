@@ -1,11 +1,18 @@
 {
     "scripts": {
         "write": "npx prettier . --write",
+        "build": "esbuild src/content/indexForHTML.tsx --bundle --outfile=build/content/indexForHTML.js && esbuild src/content/index.ts --bundle --outfile=build/content/index.js",
         "dev": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
     },
     "type": "module",
     "devDependencies": {
+        "esbuild": "0.25.0",
         "onchange": "^7.1.0",
-        "prettier": "3.3.2"
+        "prettier": "3.3.2",
+        "typescript": "^5.7.3"
+    },
+    "dependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
     }
 }

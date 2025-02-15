@@ -77,7 +77,7 @@ function showPopover(x, y, word) {
 }
 
 document.addEventListener("dblclick", (event) => {
-    const attempts = 0;
+    let attempts = 0;
     const maxAttempts = 3;
 
     const start = async (selectedText) => {
