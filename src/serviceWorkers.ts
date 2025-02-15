@@ -1,4 +1,4 @@
-console.log(`start serviceWorkers/index.js`);
+console.log(`start serviceWorkers !!!!!!!!!!!!!!!!!!!!!`);
 
 //! get message content/index.js
 // chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

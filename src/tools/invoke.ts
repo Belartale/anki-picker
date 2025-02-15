@@ -1,4 +1,6 @@
-export function invoke(action, version, params = {}) {
+type InvokeContract = (action: string, version: number, params?: object ) => Promise<unknown>
+
+export const invoke: InvokeContract = (action, version, params = {}) => {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("error", () => reject("failed to issue request"));
@@ -8,10 +10,10 @@ export function invoke(action, version, params = {}) {
                 if (Object.getOwnPropertyNames(response).length != 2) {
                     throw "response has an unexpected number of fields";
                 }
-                if (!response.hasOwnProperty("error")) {
+                if (!Object.prototype.hasOwnProperty.call(response, "error")) {
                     throw "response is missing required error field";
                 }
-                if (!response.hasOwnProperty("result")) {
+                if (!Object.prototype.hasOwnProperty.call(response, "result")) {
                     throw "response is missing required result field";
                 }
                 if (response.error) {
