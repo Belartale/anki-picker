@@ -2,10 +2,10 @@
 
 # Directories at root of a first
 /node_modules/
+/build/
 /coverage/
 /flow-coverage/
 /dist/
-/test/src/
 
 # Files
 *.log
